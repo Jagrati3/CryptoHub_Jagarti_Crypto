@@ -15,4 +15,93 @@ a {
   min-height: 100vh;
   color: white;
   background: linear-gradient(#0b004e, #1d152f, #002834);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body[data-theme="light"] {
+  background: #ffffff !important;
+}
+
+body[data-theme="light"] .app {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+body[data-theme="light"] *:not(.signup-btn):not(.hero-form button):not(.hero button) {
+  color: #000000 !important;
+}
+
+body[data-theme="light"] .home,
+body[data-theme="light"] .pricing,
+body[data-theme="light"] .blog,
+body[data-theme="light"] .features,
+body[data-theme="light"] section,
+body[data-theme="light"] main,
+body[data-theme="light"] div {
+  background: transparent !important;
+}
+
+body[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 2px solid #e0e0e0 !important;
+}
+
+body[data-theme="light"] .navbar select {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: 2px solid #7927ff !important;
+}
+
+body[data-theme="light"] .navbar option {
+  background-color: #ffffff !important;
+}
+
+body[data-theme="light"] .crypto-table {
+  background: #f8f9fa !important;
+}
+
+body[data-theme="light"] .table-layout {
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+body[data-theme="light"] .card,
+body[data-theme="light"] .pricing-card,
+body[data-theme="light"] .blog-card,
+body[data-theme="light"] .feature-card {
+  background: #f8f9fa !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+body[data-theme="light"] .hero-form input,
+body[data-theme="light"] input,
+body[data-theme="light"] textarea {
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+}
+
+body[data-theme="light"] footer,
+body[data-theme="light"] .footer {
+  background: #f8f9fa !important;
+  border-top: 1px solid #e0e0e0 !important;
+}
+
+body[data-theme="light"] .logo-text,
+body[data-theme="light"] .hero-title {
+  -webkit-text-fill-color: transparent !important;
+  background: linear-gradient(90deg, #7927ff 0%, #2193b0 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+}
+
+body[data-theme="light"] .signup-btn,
+body[data-theme="light"] .hero-form button,
+body[data-theme="light"] .hero button {
+  color: #fff !important;
+  background: linear-gradient(90deg, #7927ff 0%, #2193b0 100%) !important;
+}
+
+body[data-theme="light"] .green {
+  color: #00d515 !important;
+}
+body[data-theme="light"] .red {
+  color: #ff4646 !important;
 }
