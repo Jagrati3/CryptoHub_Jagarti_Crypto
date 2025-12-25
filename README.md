@@ -251,6 +251,3 @@ For questions or issues, please:
 ## ⭐ Show Your Support
 
 If you find this project helpful, please give it a ⭐️ on GitHub!
-
-[![GitHub stars](https://img.shields.io/github/stars/KaranUnique/CryptoHub?style=social)](https://github.com/KaranUnique/CryptoHub/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/KaranUnique/CryptoHub?style=social)](https://github.com/KaranUnique/CryptoHub/network/members)
