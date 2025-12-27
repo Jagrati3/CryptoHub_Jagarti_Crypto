@@ -47,13 +47,8 @@ function Login() {
     e.preventDefault();
 
     if (validateForm()) {
-      // Placeholder for future API integration
       console.log("Login data:", formData);
-      
-      // Simulate successful login
       alert("Login successful! (UI only - no backend integration)");
-      
-      // Navigate to home page
       navigate("/");
     }
   };
