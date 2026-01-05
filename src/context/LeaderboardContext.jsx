@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { collection, query, orderBy, limit, onSnapshot, doc, setDoc, getDoc, updateDoc, increment, serverTimestamp } from "firebase/firestore";
 import { db, isFirebaseConfigured } from "../firebase";
@@ -25,7 +26,7 @@ export const LeaderboardProvider = ({ children }) => {
             setLoading(false);
             return;
         }
-        
+
         const q = query(
             collection(db, "leaderboard"),
             orderBy("score", "desc"),

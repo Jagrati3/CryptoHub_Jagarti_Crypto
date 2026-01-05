@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
@@ -106,7 +107,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
             return;
         }
-        
+
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 try {
@@ -119,7 +120,7 @@ export const AuthProvider = ({ children }) => {
                             fullName: userData.fullName,
                         });
                         console.log("Current user after merge:", { ...user, fullName: userData.fullName });
-                        
+
                         // Initialize leaderboard entry if it doesn't exist
                         const leaderboardDoc = await getDoc(doc(db, "leaderboard", user.uid));
                         if (!leaderboardDoc.exists()) {

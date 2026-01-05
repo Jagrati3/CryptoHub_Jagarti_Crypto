@@ -1,8 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg-deep: #050505;
+  --bg-stars: #0a0a0f;
+
+  /* Neon Accents */
+  --neon-cyan: #00f3ff;
+  --neon-purple: #bc00dd;
+  --neon-pink: #ff0055;
+
+  /* Glows */
+  --glow-cyan: rgba(0, 243, 255, 0.4);
+  --glow-purple: rgba(188, 0, 221, 0.4);
+
+  --text-main: #ffffff;
+  --text-muted: #9ca3af;
+}
 
 * {
   padding: 0;
@@ -11,89 +29,160 @@
   font-family: "Outfit", sans-serif;
 }
 
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  background:
+    radial-gradient(ellipse at top, #19102c 0%, transparent 40%),
+    /* Top Purple Nebula */
+    radial-gradient(circle at 80% 20%, #0c1827 0%, transparent 30%),
+    /* Right Blue Void */
+    #050505;
+  /* Fallback Base */
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Starfield overlay pattern (optional enhancement) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 3px),
+    radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 2px),
+    radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 3px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  z-index: -1;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+  transition: all 0.3s ease;
 }
 
-.app {
-  min-height: 100vh;
-  color: white;
-  background: linear-gradient(#0b004e, #1d152f, #002834);
-  transition: background 0.3s ease, color 0.3s ease;
+/* -----------------------------
+   Glassmorphism Utilities
+-------------------------------- */
+.glass-panel {
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
-body[data-theme="light"] {
-  background: #ffffff !important;
+.glass-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
 }
 
-body[data-theme="light"] .app {
-  background: #ffffff !important;
-  color: #000000 !important;
+.glass-card:hover {
+  border-color: rgba(0, 243, 255, 0.4);
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.15);
+  transform: translateY(-3px);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
 }
 
-body[data-theme="light"] *:not(.signup-btn):not(.hero-form button):not(.hero button):not(.price):not(.pricing-button):not(.login-btn):not(.blog-desc) {
-  color: #000000 !important;
+.auth-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-body[data-theme="light"] .home,
-body[data-theme="light"] .blog,
-body[data-theme="light"] .features,
-body[data-theme="light"] section,
-body[data-theme="light"] main,
-body[data-theme="light"] div:not(.price) {
-  background: transparent !important;
+.auth-input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+  background: rgba(0, 243, 255, 0.05);
 }
 
-body[data-theme="light"] .navbar {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-bottom: 2px solid #e0e0e0 !important;
+/* -----------------------------
+   Neon Buttons
+-------------------------------- */
+.btn-neon {
+  background: linear-gradient(90deg, var(--neon-cyan), #00a3cc);
+  color: #000;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 28px;
+  /* Matches Log In button */
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-body[data-theme="light"] .navbar select {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border: 2px solid #7927ff !important;
+.btn-neon:hover {
+  box-shadow: 0 0 20px var(--glow-cyan);
+  transform: translateY(-2px);
+  filter: brightness(1.2);
 }
 
-body[data-theme="light"] .navbar option {
-  background-color: #ffffff !important;
+.btn-neon-purple {
+  background: linear-gradient(90deg, var(--neon-purple), #9900b3);
+  color: #fff;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-body[data-theme="light"] .crypto-table {
-  background: #f8f9fa !important;
+.btn-neon-purple:hover {
+  box-shadow: 0 0 20px var(--glow-purple);
+  transform: translateY(-2px);
+  filter: brightness(1.2);
 }
 
-body[data-theme="light"] .table-layout {
-  border-bottom: 1px solid #e0e0e0 !important;
+/* Text Gradients */
+.text-gradient-cyan {
+  background: linear-gradient(to right, #00f3ff, #0066ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-body[data-theme="light"] .card,
-body[data-theme="light"] .pricing-card,
-body[data-theme="light"] .blog-card,
-body[data-theme="light"] .feature-card {
-  background: #f8f9fa !important;
-  border: 1px solid #e0e0e0 !important;
+.text-gradient-purple {
+  background: linear-gradient(to right, #bc00dd, #ff0055);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-body[data-theme="light"] .hero-form input,
-body[data-theme="light"] input,
-body[data-theme="light"] textarea {
-  background: #f0f0f0 !important;
-  color: #000000 !important;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-body[data-theme="light"] footer,
-body[data-theme="light"] .footer {
-  background: #f8f9fa !important;
-  border-top: 1px solid #e0e0e0 !important;
+::-webkit-scrollbar-track {
+  background: #000;
 }
 
-body[data-theme="light"] .logo-text,
-body[data-theme="light"] .hero-title {
-  -webkit-text-fill-color: transparent !important;
-  background: linear-gradient(90deg, #7927ff 0%, #2193b0 100%) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 body[data-theme="light"] .signup-btn,

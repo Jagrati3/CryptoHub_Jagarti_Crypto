@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState, useCallback, useMemo } from "react";
 
 export const CoinContext = createContext();
@@ -61,6 +62,7 @@ export const CoinContextProvider = (props) => {
     currency,
     setCurrency,
     isLoading
+    isLoading,
   }), [allCoin, currency, isLoading]);
   return (
     <CoinContext.Provider value={contextValue}>

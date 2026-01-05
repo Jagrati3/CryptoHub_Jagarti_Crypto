@@ -1,22 +1,10 @@
-import { useTheme } from '../context/ThemeContext';
-
+import React from 'react';
+import './Footer.css';
 const Footer = () => {
-  const { isDark } = useTheme();
-
   return (
-    <footer
-      className={`w-full py-6 sm:py-8 border-t ${isDark
-          ? 'bg-[#0a0a1b] border-gray-800 text-gray-400'
-          : 'bg-white border-gray-200 text-gray-600'
-        }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-xs sm:text-sm">
-          Copyright © 2025, Cryptoplace - All Rights Reserved.
-        </p>
-      </div>
-    </footer>
-  );
-};
-
+    <div data-aos="fade-out" className='footer'>
+      <p>Copyright @ 2025, CryptoHub - All Right Reserved.</p>
+    </div>
+  )
+}
 export default Footer;

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import "./Signup.css"
+import "./Signup.css";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { FiUser, FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 
 function Signup() {
   const navigate = useNavigate();
@@ -115,7 +118,7 @@ function Signup() {
     } catch (error) {
       console.error("Google signup error:", error);
       let errorMessage = "Failed to sign up with Google. Please try again.";
-      
+
       if (error.code === "auth/popup-closed-by-user") {
         errorMessage = "Sign up cancelled";
       } else if (error.code === "auth/network-request-failed") {
@@ -130,55 +133,74 @@ function Signup() {
 
   return (
     <div className="auth-container">
-      <div className="auth-card signup-card">
+      <div className="auth-orb orb-top-left"></div>
+      <div className="auth-orb orb-bottom-right"></div>
+
+      <motion.div
+        className="glass-panel auth-card signup-card"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="auth-header">
           <h1 className="auth-title">Create Account</h1>
           <p className="auth-subtitle">
-            Join CryptoHub and start tracking crypto today
+            Join <span className="text-gradient-purple">CryptoHub</span> and start tracking today
           </p>
           {errors.general && (
-            <div className="general-error">
+            <motion.div
+              className="general-error"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
               {errors.general}
-            </div>
+            </motion.div>
           )}
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="fullName">Full Name</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              placeholder="Enter your full name"
-              value={formData.fullName}
-              onChange={handleChange}
-              className={errors.fullName ? "input-error" : ""}
-              disabled={loading}
-              autoComplete="name"
-            />
+            <div className="input-with-icon">
+              <FiUser className="input-icon" />
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Ex. John Doe"
+                value={formData.fullName}
+                onChange={handleChange}
+                className={`auth-input ${errors.fullName ? "input-error" : ""}`}
+                disabled={loading}
+                autoComplete="name"
+              />
+            </div>
             {errors.fullName && <span className="error-message">{errors.fullName}</span>}
           </div>
 
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              onChange={handleChange}
-              className={errors.email ? "input-error" : ""}
-              disabled={loading}
-              autoComplete="email"
-            />
+            <div className="input-with-icon">
+              <FiMail className="input-icon" />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Ex. satoshi@bitcoin.org"
+                value={formData.email}
+                onChange={handleChange}
+                className={`auth-input ${errors.email ? "input-error" : ""}`}
+                disabled={loading}
+                autoComplete="email"
+              />
+            </div>
             {errors.email && <span className="error-message">{errors.email}</span>}
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <div className="password-input-wrapper">
+            <div className="input-with-icon">
+              <FiLock className="input-icon" />
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
@@ -186,7 +208,7 @@ function Signup() {
                 placeholder="Create a strong password"
                 value={formData.password}
                 onChange={handleChange}
-                className={errors.password ? "input-error" : ""}
+                className={`auth-input ${errors.password ? "input-error" : ""}`}
                 disabled={loading}
                 autoComplete="new-password"
               />
@@ -196,7 +218,7 @@ function Signup() {
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={loading}
               >
-                {showPassword ? "👁️" : "👁️‍🗨️"}
+                {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
             </div>
             {errors.password && <span className="error-message">{errors.password}</span>}
@@ -204,7 +226,8 @@ function Signup() {
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <div className="password-input-wrapper">
+            <div className="input-with-icon">
+              <FiLock className="input-icon" />
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
@@ -212,7 +235,7 @@ function Signup() {
                 placeholder="Confirm your password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className={errors.confirmPassword ? "input-error" : ""}
+                className={`auth-input ${errors.confirmPassword ? "input-error" : ""}`}
                 disabled={loading}
                 autoComplete="new-password"
               />
@@ -222,7 +245,7 @@ function Signup() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 disabled={loading}
               >
-                {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+                {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
               </button>
             </div>
             {errors.confirmPassword && (
@@ -231,51 +254,43 @@ function Signup() {
           </div>
 
           <div className="terms-checkbox">
-            <label>
-              <input type="checkbox" required disabled={loading} />
-              <span>
-                I agree to the{" "}
-                <Link to="/terms" className="terms-link">Terms of Service</Link>{" "}
-                and{" "}
-                <Link to="/privacy" className="terms-link">Privacy Policy</Link>
-              </span>
+            <input type="checkbox" id="terms" required disabled={loading} />
+            <label htmlFor="terms">
+              I agree to the{" "}
+              <Link to="/terms" className="terms-link">Terms of Service</Link>{" "}
+              and{" "}
+              <Link to="/privacy" className="terms-link">Privacy Policy</Link>
             </label>
           </div>
 
-          <button type="submit" className="auth-submit-btn" disabled={loading}>
+          <button type="submit" className="btn-neon-purple w-full" disabled={loading}>
             {loading ? "Creating Account..." : "Create Account"}
           </button>
 
           <div className="divider">
-            <span>OR</span>
+            <span>OR REGISTER WITH</span>
           </div>
 
           <button
             type="button"
-            className="google-signin-btn"
+            className="google-signin-btn glass-card"
             onClick={handleGoogleSignup}
             disabled={loading}
           >
-            <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-              <path fill="none" d="M0 0h48v48H0z"/>
-            </svg>
-            Continue with Google
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="google-icon" />
+            Google Account
           </button>
         </form>
 
         <div className="auth-footer">
           <p>
             Already have an account?{" "}
-            <Link to="/login" className="auth-link">
+            <Link to="/login" className="auth-link text-gradient-purple">
               Login
             </Link>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -55,14 +55,84 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--neon-purple), var(--neon-cyan), transparent);
-  opacity: 0.5;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: center;
+  /* Consistent Glass Background */
+  background: rgba(5, 5, 5, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
-/* --- Logo Section --- */
-.navbar-logo {
-  height: 40px;
+.navbar.scrolled {
+  background: rgba(5, 5, 5, 0.9);
+  padding: 0.8rem 5%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-glass-nav {
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  /* Clear readable size */
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 28px;
+  /* Larger touch target */
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-glass-nav:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  /* Flexbox is more robust for this dynamic spacing */
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+/* Brand */
+.navbar-brand {
+  flex: 0 0 auto;
+  /* Prevent shrinking */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Right Side Actions */
+.nav-right {
+  flex: 0 0 auto;
+  /* Prevent shrinking */
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo-wrapper {
+  position: relative;
   width: 40px;
   border-radius: 50%;
   object-fit: cover;
@@ -83,16 +153,23 @@
   50% {
     transform: translateY(-4px);
   }
+  height: 40px;
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(0, 243, 255, 0.4));
 }
 
 .logo-text {
+  font-family: 'Outfit', sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
+  letter-spacing: -0.5px;
   color: #fff;
-  letter-spacing: 1px;
-  margin-left: 8px;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #fff, #a5a5a5);
+  background: linear-gradient(135deg, #fff 0%, #aeb8c4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -162,15 +239,81 @@
 /* Cyber Select Box */
 .currency-select {
   padding: 8px 16px;
+}
+
+/* Desktop Navigation */
+.nav-links {
+  flex: 1;
+  /* Occupy center space */
+  display: flex !important;
+  flex-direction: row !important;
+  /* Force Horizontal */
+  flex-wrap: nowrap !important;
+  /* Never stack */
+  align-items: center;
+  justify-content: space-between;
+  /* Use the space left and right of links */
+  max-width: 500px;
+  /* Reduced to bring links closer together */
+  margin: 0 auto;
+  /* Center the group in the header */
+}
+
+/* Remove old ul/li styles */
+/* .nav-links ul/li removed */
+
+.nav-links a {
+  display: inline-block;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  position: relative;
+  padding: 0.5rem 0;
+  letter-spacing: 0.5px;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #fff;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* Right Side Actions - Right Align */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Currency Selector */
+.currency-selector select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 8px 12px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--glass-border);
-  color: var(--neon-cyan);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.85rem;
-  cursor: pointer;
   outline: none;
-  transition: all 0.3s;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
 }
 
 .currency-select:hover,
@@ -219,16 +362,46 @@
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
   transition: 0.5s;
+.currency-selector select:hover {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.login-btn:hover::before {
-  left: 100%;
+.currency-selector option {
+  background: var(--bg-surface);
+  color: #fff;
 }
 
-.login-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(0, 243, 255, 0.6);
-  background: #fff;
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-text {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+
+.btn-text:hover {
+  color: var(--primary);
+}
+
+/* User Menu */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 16px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Signup Button - ensuring consistency if it exists */
@@ -263,12 +436,21 @@
   color: #ff4646;
   transition: all 0.3s;
   cursor: pointer;
+.user-email {
+  font-size: 0.9rem;
+  color: #cbd5e1;
 }
 
-.logout-btn:hover {
-  background: #ff4646;
-  color: #fff;
-  box-shadow: 0 0 20px rgba(255, 70, 70, 0.4);
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  font-size: 1.1rem;
 }
 
 .user-email {
@@ -282,40 +464,49 @@
 
 /* --- Theme Toggle --- */
 .theme-toggle {
+.icon-btn:hover {
+  color: #ff3366;
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
   cursor: pointer;
   padding: 4px;
   display: flex;
   align-items: center;
 }
 
-.toggle-track {
-  width: 52px;
-  height: 26px;
-  background: #1a1a24;
-  border-radius: 20px;
-  position: relative;
-  border: 1px solid var(--glass-border);
-  transition: 0.3s;
-}
-
-.toggle-thumb {
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(135deg, #fff, #e0e0e0);
-  border-radius: 50%;
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  /* Handled via JS typically, but structure for safety */
   position: absolute;
-  top: 2px;
-  left: 3px;
-  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 999;
 }
 
-/* Mode Specifics */
-.toggle-track.light {
-  background: #eef2f5;
-  border-color: #ccd;
+.mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.mobile-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .toggle-track.light .toggle-thumb {
@@ -578,4 +769,17 @@ body[data-theme='light'] .mobile-controls {
 
 body[data-theme='light'] .mobile-control-item {
   color: #475569;
+/* Responsiveness */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
 }
