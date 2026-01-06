@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import "./Features.css";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 
 import {
   Chart as ChartJS,
@@ -8,18 +10,24 @@ import {
   CategoryScale,
   LinearScale,
   PointElement,
+  Tooltip,
+  Legend,
+  Filler
 } from "chart.js";
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, Filler);
 
 const Features = () => {
-  // Top 5 coins
+  /* 
+    Define coin data with brand-specific neon colors for the graph 
+    BTC: Orange, ETH: Blue-Purple, SOL: Green, BNB: Yellow, ADA: Cyan Blue
+  */
   const topCoins = [
-    { id: "bitcoin", name: "Bitcoin", symbol: "BTC" },
-    { id: "ethereum", name: "Ethereum", symbol: "ETH" },
-    { id: "solana", name: "Solana", symbol: "SOL" },
-    { id: "binancecoin", name: "BNB", symbol: "BNB" },
-    { id: "cardano", name: "Cardano", symbol: "ADA" },
+    { id: "bitcoin", name: "Bitcoin", symbol: "BTC", color: "#F7931A" },
+    { id: "ethereum", name: "Ethereum", symbol: "ETH", color: "#627EEA" },
+    { id: "solana", name: "Solana", symbol: "SOL", color: "#14F195" },
+    { id: "binancecoin", name: "BNB", symbol: "BNB", color: "#F3BA2F" },
+    { id: "cardano", name: "Cardano", symbol: "ADA", color: "#2979FF" },
   ];
 
   const [selectedCoin, setSelectedCoin] = useState(topCoins[0].id);
@@ -27,44 +35,55 @@ const Features = () => {
   const [prices, setPrices] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Helper to get current coin object
+  const currentCoin = topCoins.find(c => c.id === selectedCoin) || topCoins[0];
+
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `https://api.coingecko.com/api/v3/coins/${selectedCoin}/market_chart?vs_currency=inr&days=${days}`
+        );
+        const data = await res.json();
+        setPrices(data.prices || []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setPrices([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchData();
   }, [selectedCoin, days]);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${selectedCoin}/market_chart?vs_currency=inr&days=${days}`
-      );
-      const data = await res.json();
-      setPrices(data.prices || []);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setPrices([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const chartData = {
     labels: prices.map((price) =>
-      days === 1 
+      days === 1
         ? new Date(price[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         : new Date(price[0]).toLocaleDateString()
     ),
     datasets: [
       {
-        label: `${topCoins.find(coin => coin.id === selectedCoin)?.name || selectedCoin} (INR)`,
+        label: `${currentCoin.name} (INR)`,
         data: prices.map((price) => price[1]),
-        borderColor: "#8b5cf6",
-        backgroundColor: "rgba(139, 92, 246, 0.15)",
+        borderColor: currentCoin.color, // Use dynamic coin color
+        backgroundColor: "transparent", // Will be overridden by gradient
         tension: 0.4,
         pointRadius: 0,
         fill: true,
-        borderWidth: 3,
+        borderWidth: 2,
       },
     ],
+  };
+
+  // Helper to convert hex to rgba for gradient
+  const hexToRgba = (hex, alpha) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
   const timeRanges = [
@@ -77,16 +96,37 @@ const Features = () => {
 
   return (
     <div className="features-container">
-      {/* HEADER */}
-      <div className="features-header">
-        <h2 className="features-title">Top 5 Crypto Charts</h2>
+      <div className="glow-spot top-right"></div>
 
+      <div className="features-header">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Market <span className="text-gradient-purple">Intelligence</span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          Advanced charting and real-time data analysis.
+        </motion.p>
+      </div>
+
+      <motion.div
+        className="features-card glass-panel"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
         <div className="features-controls">
-          {/* Coin Selector */}
           <div className="select-wrapper">
-            <select 
-              value={selectedCoin} 
+            <select
+              value={selectedCoin}
               onChange={(e) => setSelectedCoin(e.target.value)}
+              className="cosmic-select"
             >
               {topCoins.map((coin) => (
                 <option key={coin.id} value={coin.id}>
@@ -96,9 +136,12 @@ const Features = () => {
             </select>
           </div>
 
-          {/* Time Range Selector */}
           <div className="select-wrapper">
-            <select value={days} onChange={(e) => setDays(Number(e.target.value))}>
+            <select
+              value={days}
+              onChange={(e) => setDays(Number(e.target.value))}
+              className="cosmic-select"
+            >
               {timeRanges.map((range) => (
                 <option key={range.value} value={range.value}>
                   {range.label}
@@ -107,7 +150,6 @@ const Features = () => {
             </select>
           </div>
         </div>
-      </div>
 
       {/* CARD */}
       <div className="features-card">
@@ -130,21 +172,69 @@ const Features = () => {
                 maintainAspectRatio: false,
                 plugins: {
                   legend: {
-                    labels: {
-                      color: '#ffffff',
-                      font: { size: 16, weight: 'bold' }
+                    display: false
+                  },
+                  tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                    titleColor: '#f8fafc',
+                    bodyColor: currentCoin.color,
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 1,
+                    padding: 12,
+                    cornerRadius: 8,
+                    titleFont: { family: 'Outfit', size: 14, weight: 'bold' },
+                    bodyFont: { family: 'JetBrains Mono', size: 13 },
+                    callbacks: {
+                      label: function (context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                          label = 'Price: ';
+                        }
+                        if (context.parsed.y !== null) {
+                          label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed.y);
+                        }
+                        return label;
+                      }
                     }
                   }
                 },
                 scales: {
                   x: {
-                    ticks: { color: '#b8b8b8' },
-                    grid: { color: 'rgba(255,255,255,0.1)' }
+                    ticks: {
+                      color: '#64748b',
+                      font: { family: 'JetBrains Mono', size: 11 },
+                      maxTicksLimit: 6,
+                      maxRotation: 0
+                    },
+                    grid: {
+                      color: 'rgba(255, 255, 255, 0.03)',
+                      drawBorder: false,
+                    }
                   },
                   y: {
-                    ticks: { color: '#b8b8b8' },
-                    grid: { color: 'rgba(255,255,255,0.1)' }
+                    position: 'right',
+                    ticks: {
+                      color: '#64748b',
+                      font: { family: 'JetBrains Mono', size: 11 },
+                      callback: function (value) {
+                        return '₹' + value.toLocaleString();
+                      }
+                    },
+                    grid: {
+                      color: 'rgba(255, 255, 255, 0.03)',
+                      drawBorder: false,
+                    }
                   }
+                },
+                interaction: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                hover: {
+                  mode: 'index',
+                  intersect: false
                 }
               }}
             />
@@ -167,16 +257,13 @@ const Features = () => {
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      {/* FOOTER NOTE */}
-      <p className="features-note">
-        Data powered by CoinGecko API · Prices in INR (₹) · Real-time charts
-      </p>
+      <div className="features-note">
+        Powered by CoinGecko API · Real-time Market Data
+      </div>
     </div>
   );
 };
 
 export default Features;
-
-

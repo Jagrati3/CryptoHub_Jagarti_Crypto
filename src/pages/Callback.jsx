@@ -1,16 +1,25 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
 
-export default function Callback() {
-  const { isLoading } = useAuth0();
-  const navigate = useNavigate();
+const Callback = () => {
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isLoading) {
-      navigate("/");
-    }
-  }, [isLoading, navigate]);
+    useEffect(() => {
+        // This component handles the redirect after successful auth
+        // For now, we simulate a brief loading state then redirect to dashboard
+        const timer = setTimeout(() => {
+            navigate('/dashboard');
+        }, 1500);
 
-  return <p>Logging you in...</p>;
-}
+        return () => clearTimeout(timer);
+    }, [navigate]);
+
+    return (
+        <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <LoadingSpinner />
+        </div>
+    );
+};
+
+export default Callback;

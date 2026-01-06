@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import Navbar from "./components/Navbar";
-import Callback from "./pages/Callback";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Coin from "./pages/Home/Coin/Coin";
 import Footer from "./components/Footer";
@@ -11,10 +10,23 @@ import Features from "./components/Features";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import BlogDetail from "./components/BlogDetail";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Leaderboard from "./components/Leaderboard";
+import ChangePassword from "./components/ChangePassword";
+import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { CoinContext } from "./context/CoinContext";
+import LoadingSpinner from "./components/LoadingSpinner";
+
 
 const App = () => {
+  const { isLoading } = useContext(CoinContext);
+  const location = useLocation();
+  const isDashboard = location.pathname === "/dashboard";
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -22,22 +34,68 @@ const App = () => {
     });
   }, []);
 
+<<<<<<< HEAD
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+const App = () => {
+  const location = useLocation();
+  const isDashboard = location.pathname === "/dashboard";
+=======
+>>>>>>> 225ea635d73d2c12511d321c1f3d5dd786afe81e
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+    });
+  }, []);
+
   return (
-    <div className="app">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/coin/:coinId" element={<Coin />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/blog" element={<Blog />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <div className="app">
+          {/* Loading Spinner - will show when isLoading is true */}
+          {isLoading && !isDashboard && <LoadingSpinner />}
 
-        <Route path="/blog/:id" element={<BlogDetail />} />
-
-        <Route path="/features" element={<Features />} />
-        <Route path="/callback" element={<Callback />} />
-      </Routes>
-      <Footer />
-    </div>
+          {!isDashboard && <Navbar />}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/coin/:coinId" element={<Coin />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/leaderboard"
+              element={
+                <PrivateRoute>
+                  <Leaderboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/change-password"
+              element={
+                <PrivateRoute>
+                  <ChangePassword />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+          {!isDashboard && <Footer />}
+        </div>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 

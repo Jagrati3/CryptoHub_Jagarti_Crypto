@@ -1,0 +1,46 @@
+
+> cryptoplace@0.0.0 lint D:\ECWoC Projects\CryptoHub
+> eslint .
+
+
+D:\ECWoC Projects\CryptoHub\src\components\Blog.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\ECWoC Projects\CryptoHub\src\components\Features.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\ECWoC Projects\CryptoHub\src\components\Login.jsx
+  5:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\ECWoC Projects\CryptoHub\src\components\Navbar.jsx
+   1:17  error  'useContext' is defined but never used. Allowed unused vars must match /^[A-Z_]/u            no-unused-vars
+   1:39  error  'useEffect' is defined but never used. Allowed unused vars must match /^[A-Z_]/u             no-unused-vars
+  16:20  error  'setScrolled' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\ECWoC Projects\CryptoHub\src\components\Pricing.jsx
+  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\ECWoC Projects\CryptoHub\src\components\Signup.jsx
+  5:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\ECWoC Projects\CryptoHub\src\context\AuthContext.jsx
+  8:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\ECWoC Projects\CryptoHub\src\context\CoinContext.jsx
+  3:14  error  Fast refresh only works when a file only exports components. Move your React context(s) to a separate file  react-refresh/only-export-components
+
+D:\ECWoC Projects\CryptoHub\src\context\LeaderboardContext.jsx
+  8:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\ECWoC Projects\CryptoHub\src\context\ThemeContext.jsx
+  5:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\ECWoC Projects\CryptoHub\src\pages\Home\Coin\Coin.jsx
+  56:6  warning  React Hook useEffect has missing dependencies: 'fetchCoinData' and 'fetchHistoricalData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\ECWoC Projects\CryptoHub\src\pages\Home\Home.jsx
+  6:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+Γ£û 14 problems (13 errors, 1 warning)
+
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.

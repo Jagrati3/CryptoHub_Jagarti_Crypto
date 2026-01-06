@@ -1,61 +1,58 @@
+import React from "react";
 import "./Blog.css";
-
 import { useNavigate } from "react-router-dom";
-
-
-const blogPosts = [
-  {
-    title: "What is Cryptocurrency?",
-    date: " 12 January 2025",
-    excerpt:
-      "Cryptocurrency is a digital or virtual currency that uses cryptography for security. It operates independently of a central bank and enables peer-to-peer transactions on a decentralized network called blockchain.",
-    content: `Cryptocurrency is a digital or virtual currency that uses cryptography for security. It operates independently of a central bank and enables peer-to-peer transactions on a decentralized network called blockchain. Bitcoin was the first cryptocurrency, but now there are thousands, each with unique features and use cases.`,
-  },
-  {
-    title: "How to Get Started with Crypto",
-    date: " 13 March 2025",
-    excerpt:
-      "Learn the basics of getting started with cryptocurrency, including how to choose a trusted exchange, create and secure your account properly, and safely make your first crypto purchase with confidence.",
-    content: `1. Choose a reputable crypto exchange. 2. Create and secure your account. 3. Fund your wallet and start buying coins. 4. Always research before investing and use strong security practices.`,
-  },
-  {
-    title: "Popular Cryptocurrencies in 2025",
-    date: "14 June 2025",
-    excerpt:
-      "Explore the most popular cryptocurrencies such as Bitcoin, Ethereum, Solana, Cardano, and many other digital assets, and understand what makes each of them unique in the crypto ecosystem.",
-    content: `Bitcoin (BTC): The first and most well-known cryptocurrency. Ethereum (ETH): Known for smart contracts and decentralized apps. Solana, Cardano, Polygon, and more: Each offers unique features and use cases.`,
-  },
-  {
-    title: "Crypto Safety Tips",
-    date: "15 August 2025",
-    excerpt:
-      "Stay safe in the crypto world by learning essential security tips that help you protect your digital assets, avoid common scams, and follow best practices for secure crypto usage.",
-    content: `- Use strong, unique passwords and enable 2FA. - Never share your private keys. - Be cautious of scams and phishing attempts. - Only use trusted wallets and exchanges.`,
-  },
-];
+import { blogPosts } from "../data/blogData";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 
 export default function Blog() {
-
   const navigate = useNavigate();
 
   return (
     <div className="blog-page">
-      <div data-aos="fade-in" className="blog-title">CryptoHub Blog</div>
-      <p data-aos="zoom-out" className="blog-desc">
-        Insights, practical guides, and helpful tips for everyone who is interested in learning about cryptocurrency and understanding how the crypto world works.
-      </p>
-      <div className="blog-list">
+      <div className="glow-spot top-left"></div>
+
+      <div className="blog-header">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Cosmic <span className="text-gradient-cyan">Insights</span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          Navigate the blockchain universe with expert guides and news.
+        </motion.p>
+      </div>
+
+      <div className="blog-grid">
         {blogPosts.map((post, idx) => (
-          <div data-aos={idx % 2 === 0 ? "fade-right" : "fade-left"} className="blog-card" 
-          key={idx}
-          onClick={() => navigate(`/blog/${idx}`)}
-          style={{ cursor: "pointer" }}
+          <motion.div
+            key={idx}
+            className="blog-card glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: idx * 0.1 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            onClick={() => navigate(`/blog/${idx}`)}
           >
-            <h3 className="blog-card-title">{post.title}</h3>
-            <div className="blog-card-date">{post.date}</div>
-            <div className="blog-card-excerpt">{post.excerpt}</div>
-            {/* In a real app, add a 'Read more' link or modal for full content */}
-          </div>
+            <div className="card-top">
+              <span className="blog-category">{post.category}</span>
+              <span className="blog-date">{post.date}</span>
+            </div>
+
+            <h3 className="blog-title-card">{post.title}</h3>
+            <p className="blog-excerpt">{post.excerpt}</p>
+
+            <div className="read-more">
+              Read Article <span className="arrow">→</span>
+            </div>
+          </motion.div>
         ))}
       </div>
     </div>

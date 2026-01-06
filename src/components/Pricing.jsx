@@ -1,81 +1,107 @@
-import "./Pricing.css";
+import { useTheme } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { plans, comparisonFeatures, faqs } from "../data/pricingPlans";
+import 'Pricing.css';
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { FiCheck, FiX } from "react-icons/fi";
 
 export default function Pricing() {
-      const plans = [
-  {
-    name: "Free",
-    price: "₹0",
-    description: "Get started with essential crypto tools.",
-    features: [
-      { label: "Track top 50 cryptocurrencies", available: true },
-      { label: "Real-time price updates", available: true },
-      { label: "Basic charts & analytics", available: true },
-      { label: "Coin detail pages", available: true },
-      { label: "Responsive dashboard", available: true },
-      { label: "Portfolio tracking", available: false },
-      { label: "Price alerts & notifications", available: false },
-      { label: "Ad-free experience", available: false },
-      { label: "Advanced charting tools", available: false },
-    ],
-  },
-  {
-    name: "Pro",
-    price: "₹399/month",
-    description: "Unlock advanced features for serious traders.",
-    features: [
-      { label: "Track up to 500 coins", available: true },
-      { label: "Advanced charting tools", available: true },
-      { label: "Portfolio tracking", available: true },
-      { label: "Price alerts & notifications", available: true },
-      { label: "Ad-free experience", available: true },
-      { label: "Unlimited coins & watchlists", available: false },
-      { label: "Export data to CSV/Excel", available: false },
-      { label: "1-on-1 onboarding & support", available: false },
-    ],
-  },
-  {
-    name: "Premium",
-    price: "₹999/month",
-    description: "All-access pass for power users and professionals.",
-    features: [
-      { label: "Unlimited coins & watchlists", available: true },
-      { label: "Customizable analytics", available: true },
-      { label: "Export data to CSV/Excel", available: true },
-      { label: "Early access to new features", available: true },
-      { label: "1-on-1 onboarding & support", available: true },
-    ],
-  },
-];
+  const { isDark } = useTheme();
+  const navigate = useNavigate();
+  const [billingCycle, setBillingCycle] = useState("monthly");
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
+
+  const handlePlanClick = (planName) => {
+    if (planName === "Free") {
+      navigate("/signup");
+    } else {
+      alert("💳 Payment Gateway Coming Soon!\n\nWe're working on integrating secure payment options. Stay tuned!");
+    }
+  };
+
+  const containerBg = isDark
+    ? 'bg-gradient-to-b from-[#0a0a1b] via-[#0f0f23] to-[#0a0a1b]'
+    : 'bg-gradient-to-b from-gray-50 via-white to-gray-50';
+
+  const textPrimary = isDark ? 'text-white' : 'text-gray-900';
+  const textSecondary = isDark ? 'text-gray-400' : 'text-gray-600';
+  const textTertiary = isDark ? 'text-gray-500' : 'text-gray-600';
+
+  const cardBg = (popular) => popular
+    ? isDark
+      ? 'bg-gradient-to-b from-purple-900/20 to-gray-900/50 border-2 border-purple-500 shadow-2xl shadow-purple-500/20 lg:scale-105'
+      : 'bg-white border-2 border-purple-500 shadow-2xl lg:scale-105'
+    : isDark
+      ? 'bg-gray-900/50 border border-gray-800 hover:border-gray-700 shadow-xl'
+      : 'bg-white border border-gray-200 hover:border-gray-300 shadow-lg';
+
+  const buttonBg = (popular) => popular
+    ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg shadow-purple-500/30'
+    : isDark
+      ? 'bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white'
+      : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg';
 
   return (
     <div className="pricing-page">
-      <div data-aos="fade-in" className="pricing-title">Pricing Plans</div>
-      <div data-aos="fade-in" className="pricing-desc">Choose the plan that fits your crypto journey. Upgrade anytime!</div>
-      <div className="pricing-cards">
-        {plans.map((plan, index) => (
-          <div key={index} data-aos={index % 2 === 0 ? "fade-up" : "fade-down"} className="pricing-card">
-            <h2>{plan.name}</h2>
-            <div className="price">{plan.price}</div>
-            <div className="desc">{plan.description}</div>
-            <ul className="pricing-features">
-              {plan.features.map((feature, i) => (
-  <li
-    key={i}
-    className={feature.available ? "feature-available" : "feature-unavailable"}
-  >
-    {feature.available ? "✔" : "✖"} {feature.label}
-  </li>
-))}
+      {/* Background Ambience */}
+      <div className="glow-spot top-center"></div>
 
-            </ul>
-            <button class="pricing-button">
-              {plan.name === "Free" ? "Start for Free" : "Get Started"}
-            </button>
-          </div>
-        ))}
+      <div className="pricing-header">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Unlock Your <span className="text-gradient-purple">Crypto Potential</span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          Choose the perfect trajectory for your investment journey.
+        </motion.p>
       </div>
-      <div data-aos="fade-out" style={{textAlign: 'center', marginTop: '40px', color: '#bdbdbd', fontSize: '1.1rem'}}>
-        All plans include secure access, regular updates, and community support.
+
+      <div className="pricing-cards-container">
+        {plans.map((plan, index) => (
+          <motion.div
+            key={index}
+            className={`pricing-card glass-panel ${plan.highlight ? "highlighted" : ""}`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ y: -10, transition: { duration: 0.3 } }}
+          >
+            {plan.highlight && <div className="popular-tag">Most Popular</div>}
+
+            <div className="card-header">
+              <h3>{plan.name}</h3>
+              <div className="price-wrapper">
+                <span className="amount">{plan.price}</span>
+                <span className="period">{plan.period}</span>
+              </div>
+              <p className="description">{plan.description}</p>
+            </div>
+
+            <div className="divider"></div>
+
+            <ul className="features-list">
+              {plan.features.map((feature, i) => (
+                <li key={i} className={feature.available ? "" : "unavailable"}>
+                  {feature.available ? <FiCheck className="icon-check" /> : <FiX className="icon-x" />}
+                  <span>{feature.label}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button className={`btn-plan ${plan.highlight ? "btn-neon-purple" : "btn-glass"}`}>
+              {plan.name === "Explorer" ? "Get Started" : "Upgrade Now"}
+            </button>
+          </motion.div>
+        ))}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
-import { Link } from 'react-router-dom'; // ✅ YEH MISSING THA
-import { FaFacebook, FaTwitter, FaInstagram, FaGithub } from 'react-icons/fa'; // ✅ YEH BHI MISSING THA
+import { Link } from 'react-router-dom';
+import { FaFacebook, FaTwitter, FaInstagram, FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   return (
