@@ -1,8 +1,8 @@
 import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { plans, comparisonFeatures, faqs } from "../data/pricingPlans";
-import 'Pricing.css';
+import { plans, comparisonFeatures, faqs } from "../data/pricingPlansData";
+import './Pricing.css';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FiCheck, FiX } from "react-icons/fi";

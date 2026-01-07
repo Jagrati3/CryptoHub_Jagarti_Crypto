@@ -34,22 +34,6 @@ const App = () => {
     });
   }, []);
 
-<<<<<<< HEAD
-import AOS from "aos";
-import "aos/dist/aos.css";
-
-const App = () => {
-  const location = useLocation();
-  const isDashboard = location.pathname === "/dashboard";
-=======
->>>>>>> 225ea635d73d2c12511d321c1f3d5dd786afe81e
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-    });
-  }, []);
-
   return (
     <ThemeProvider>
       <AuthProvider>

@@ -109,7 +109,7 @@ function Navbar() {
           ) : (
             <>
               <Link to="/login">
-                <button className="login-btn">Login</button>
+                <button className="login-btn">LOGIN</button>
               </Link>
               <Link to="/signup">
                 <button className="signup-btn">Sign up</button>
@@ -154,7 +154,7 @@ function Navbar() {
           ) : (
             <div className="mobile-auth-buttons">
               <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="login-btn full-width">Login</button>
+                <button className="login-btn full-width">LOGIN</button>
               </Link>
               <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
                 <button className="signup-btn full-width">Sign up</button>

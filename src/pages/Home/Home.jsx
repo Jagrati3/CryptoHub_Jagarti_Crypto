@@ -67,7 +67,7 @@ const Home = () => {
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           <span>Bitcoin</span>
-          <span className="text-gradient-cyan">+5.2%</span>
+          <span className="text-gradient-cyan" style={{ color: '#00f5ff' }}>+5.2%</span>
         </motion.div>
 
         <motion.div
@@ -76,7 +76,7 @@ const Home = () => {
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         >
           <span>Ethereum</span>
-          <span className="text-gradient-purple">+3.8%</span>
+          <span className="text-gradient-cyan" style={{ color: '#00f5ff' }}>+1.5%</span>
         </motion.div>
 
         <motion.div
@@ -85,7 +85,7 @@ const Home = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
         >
           <span>Solana</span>
-          <span className="text-gradient-cyan">+8.5%</span>
+          <span className="text-gradient-cyan" style={{ color: '#00f5ff' }}>+8.5%</span>
         </motion.div>
 
         <motion.div
@@ -94,7 +94,7 @@ const Home = () => {
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
         >
           <span>Cardano</span>
-          <span className="text-gradient-purple">+2.1%</span>
+          <span style={{ color: '#ff4d6d' }}>-2.1%</span>
         </motion.div>
 
         <motion.div
@@ -103,7 +103,7 @@ const Home = () => {
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         >
           <span>BNB</span>
-          <span className="text-gradient-cyan">+1.2%</span>
+          <span className="text-gradient-cyan" style={{ color: '#00f5ff' }}>+1.2%</span>
         </motion.div>
 
         <div className="hero-content">
@@ -113,8 +113,8 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Sailing The Seas Of <br />
-            <span className="text-gradient-cyan">Crypto Universe</span>
+            <span className="title-purple">Sailing The Seas Of</span> <br />
+            <span className="title-cyan">Crypto Universe</span>
           </motion.h1>
 
           <motion.p
