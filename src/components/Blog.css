@@ -318,6 +318,68 @@
 }
 
 /* ===== GO BACK BUTTON - LIGHT THEME FIX ===== */
+[/* Go Back button - base (dark theme) */]
+.blog-back-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1.6rem;
+}
+
+.blog-back-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.85rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  background: rgba(51, 49, 179, 0.8); /* stronger background */
+  color: #ffffff; /* white text for contrast */
+  border: 1px solid rgba(88, 70, 206, 0.4); /* slightly stronger border */
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+
+.blog-back-btn:hover {
+  background: rgba(51, 49, 179, 1); /* full color on hover */
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(51, 49, 179, 0.3);
+}
+
+
+.blog-back-btn:active {
+  transform: translateY(0);
+}
+
+.blog-back-btn:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.14);
+  outline-offset: 3px;
+}
+
+.blog-back-btn .back-icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  transition: transform 0.16s ease;
+}
+
+.blog-back-btn:hover .back-icon {
+  transform: translateX(-4px);
+}
+
+.blog-back-btn .back-text {
+  text-decoration: none;
+}
+
+.blog-back-btn:hover .back-text {
+  text-decoration: underline;
+}
 [data-theme="light"] .blog-back-btn {
   background: radial-gradient(circle at top left, #1d4ed8, #3b82f6);
   color: white;

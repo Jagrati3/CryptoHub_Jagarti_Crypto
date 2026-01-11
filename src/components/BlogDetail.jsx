@@ -46,8 +46,14 @@ const BlogDetail = () => {
         <button
           className="blog-back-btn"
           onClick={() => navigate(-1)} // go back button will move on back
+          aria-label="Go back to previous page"
         >
-          Go Back
+          <span className="back-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+              <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <span className="back-text">Go Back</span>
         </button>
       </div>
     </div>
