@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import './Footer.css';
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaInstagram, FaGithub, FaTwitter, FaDiscord } from 'react-icons/fa';
-import { FaCcVisa, FaCcMastercard, FaCcPaypal, FaApplePay, FaGooglePay } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaInstagram,
+  FaGithub,
+  FaTwitter,
+  FaDiscord,
+  FaCcVisa,
+  FaCcMastercard,
+  FaCcPaypal,
+  FaApplePay,
+  FaGooglePay,
+} from 'react-icons/fa';
 import { FiSend } from 'react-icons/fi';
-
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -13,9 +22,13 @@ const Footer = () => {
 
   const currentYear = new Date().getFullYear();
 
+  const isValidEmail = (value) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
   const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (!email.includes('@')) {
+
+    if (!isValidEmail(email)) {
       setStatus('Please enter a valid email address');
       return;
     }
@@ -23,7 +36,7 @@ const Footer = () => {
     setIsSubmitting(true);
     setStatus('Subscribing...');
 
-    // Simulate API call
+    // Simulated API call
     setTimeout(() => {
       setStatus('Successfully subscribed to CryptoHub Insights!');
       setEmail('');
@@ -35,27 +48,30 @@ const Footer = () => {
   return (
     <footer className="footer-container">
       <div className="footer-content">
-        {/* Main Content Grid */}
+
+        {/* Main Grid */}
         <div className="footer-main">
-          {/* Brand Section */}
+
+          {/* Brand */}
           <div className="footer-brand">
             <h2 className="footer-logo">
               Crypto<span>Hub</span>.
             </h2>
             <p>
-              The world's most accurate real-time crypto tracking & analytics platform. 
-              Live prices, advanced charts, portfolio tracking & AI insights.
+              Real-time crypto tracking, advanced analytics,
+              market insights & portfolio tools.
             </p>
+
             <div className="payment-methods">
-              <FaCcVisa className="payment-icon" title="Visa" />
-              <FaCcMastercard className="payment-icon" title="Mastercard" />
-              <FaCcPaypal className="payment-icon" title="PayPal" />
-              <FaApplePay className="payment-icon" title="Apple Pay" />
-              <FaGooglePay className="payment-icon" title="Google Pay" />
+              <FaCcVisa />
+              <FaCcMastercard />
+              <FaCcPaypal />
+              <FaApplePay />
+              <FaGooglePay />
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Markets */}
           <div className="footer-links">
             <h4>Markets</h4>
             <ul>
@@ -66,6 +82,7 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Product */}
           <div className="footer-links">
             <h4>Product</h4>
             <ul>
@@ -76,55 +93,58 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter Section */}
+          {/* Newsletter */}
           <div className="footer-newsletter">
-            <h4 id="newsletter">Newsletter</h4>
-            <p>Weekly crypto insights, alpha signals & market analysis</p>
-            <form onSubmit={handleSubscribe} className="newsletter-form">
+            <h4>Newsletter</h4>
+            <p>Weekly crypto insights & market updates</p>
+
+            <form onSubmit={handleSubscribe}>
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
                 disabled={isSubmitting}
+                aria-label="Email address"
+                required
               />
-              <button type="submit" disabled={isSubmitting}>
+              <button
+                type="submit"
+                disabled={isSubmitting || !email}
+                aria-label="Subscribe"
+              >
                 {isSubmitting ? '...' : <FiSend />}
               </button>
             </form>
-            {status && <p className={`status-message ${status.includes('Successfully') ? 'success' : 'error'}`}>{status}</p>}
+
+            {status && (
+              <p className={`status-message ${status.includes('Success') ? 'success' : 'error'}`}>
+                {status}
+              </p>
+            )}
           </div>
         </div>
 
-        {/* Social & Bottom Section */}
+        {/* Bottom */}
         <div className="footer-bottom-section">
+
           <div className="social-links">
-            <a href="https://twitter.com" aria-label="Twitter" title="Follow us on Twitter">
-              <FaTwitter />
-            </a>
-            <a href="https://instagram.com" aria-label="Instagram" title="Follow us on Instagram">
-              <FaInstagram />
-            </a>
-            <a href="https://facebook.com" aria-label="Facebook" title="Follow us on Facebook">
-              <FaFacebook />
-            </a>
-            <a href="https://github.com/KaranUnique/CryptoHub" aria-label="GitHub" title="View source on GitHub">
-              <FaGithub />
-            </a>
-            <a href="https://discord.gg" aria-label="Discord" title="Join our Discord community">
-              <FaDiscord />
-            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+            <a href="https://github.com/KaranUnique/CryptoHub" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+            <a href="https://discord.gg" target="_blank" rel="noopener noreferrer"><FaDiscord /></a>
           </div>
 
           <div className="footer-bottom">
             <p>
-              <Link to="/privacy">Privacy Policy</Link> • 
-              <Link to="/terms"> Terms of Service</Link> • 
-              <Link to="/cookies"> Cookie Policy</Link>
+              <Link to="/privacy">Privacy</Link> •
+              <Link to="/terms"> Terms</Link> •
+              <Link to="/cookies"> Cookies</Link>
             </p>
-            <p>Copyright © {currentYear} CryptoHub. All rights reserved.</p>
+            <p>© {currentYear} CryptoHub. All rights reserved.</p>
           </div>
+
         </div>
       </div>
     </footer>
